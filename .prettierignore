@@ -1,0 +1,14 @@
+# Ignore git files:
+**/.git
+
+# Ignore artifacts:
+dist
+
+# Ignore all HTML files:
+**/*.html
+
+# Ignore all Markdown files:
+*.md
+
+# Ignore all node_modules folders:
+**/node_modules
