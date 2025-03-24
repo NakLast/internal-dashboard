@@ -5,47 +5,39 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 import pluginImport from "eslint-plugin-import";
 
-export default tseslint.config(
-  { ignores: ["dist"] },
-  {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ["**/*.{ts,tsx}"],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-    },
-    plugins: {
-      "react-hooks": reactHooks,
-      "react-refresh": reactRefresh,
-      import: pluginImport,
-    },
-    rules: {
-      ...reactHooks.configs.recommended.rules,
-      "react-refresh/only-export-components": [
-        "warn",
-        { allowConstantExport: true },
-      ],
+export default tseslint.config({
+  ignore: ["dist/", "node_modules"],
+  extends: [js.configs.recommended, ...tseslint.configs.recommended],
+  files: ["**/*.{ts,tsx}"],
+  languageOptions: {
+    ecmaVersion: 2020,
+    globals: globals.browser,
+  },
+  plugins: {
+    "react-hooks": reactHooks,
+    "react-refresh": reactRefresh,
+    import: pluginImport,
+  },
+  rules: {
+    ...reactHooks.configs.recommended.rules,
+    "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
 
-      "import/order": [
-        "warn",
-        {
-          groups: [
-            "builtin",
-            "external",
-            "internal",
-            ["parent", "sibling", "index"],
-          ],
-          "newlines-between": "always",
-          pathGroupsExcludedImportTypes: ["internal"],
-          alphabetize: { order: "asc", caseInsensitive: true },
-        },
-      ],
+    "import/order": [
+      "warn",
+      {
+        groups: ["builtin", "external", "internal", ["parent", "sibling", "index"]],
+        "newlines-between": "always",
+        pathGroups: [
+          { pattern: "@app/**", group: "internal" },
+          { pattern: "@assets/**", group: "internal" },
+          { pattern: "@components/**", group: "internal" },
+        ],
+        pathGroupsExcludedImportTypes: ["internal"],
+        alphabetize: { order: "asc", caseInsensitive: true },
+      },
+    ],
 
-      "react-refresh/only-export-components": [
-        "warn",
-        { allowConstantExport: true },
-      ],
-      "no-console": "warn",
-    },
-  }
-);
+    "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+    "no-console": "warn",
+  },
+});

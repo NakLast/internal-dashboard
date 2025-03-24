@@ -1,33 +1,57 @@
-import { useState } from "react";
+import React from "react";
 
-import reactLogo from "./assets/react.svg";
+import { RouteObject, useRoutes } from "react-router";
+import { LayoutOutlined, PieChartOutlined } from "@ant-design/icons";
+import Dashboard from "@pages/Dashboard";
+import authenticatedRouters from "./router";
+import AppLayout from "@layouts/AppLayout";
 
-import viteLogo from "/vite.svg";
-import "./App.css";
+// const routers = [
+//   {
+//     type: "group",
+//     label: "Dashboard",
+//     children: [
+//       {
+//         key: "dashboard/monitor",
+//         label: "Monitor",
+//         icon: <LayoutOutlined />,
+//         path: "/dashboard/monitor",
+//         element: <Dashboard />,
+//       },
+//       {
+//         key: "dashboard/analysis",
+//         label: "Analysis",
+//         icon: <PieChartOutlined />,
+//         path: "/dashboard/analysis",
+//       },
+//     ],
+//   },
+// ];
 
-function App() {
-  const [count, setCount] = useState(0);
+const routers: RouteObject[] = [
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/dashboard/analysis",
+      },
+    ],
+  },
+];
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount(count => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
-  );
-}
+const RouterRender: React.FC = () => {
+  const routerElents = useRoutes(routers);
+
+  return routerElents;
+};
+
+const App: React.FC = () => {
+  return <RouterRender />;
+};
 
 export default App;
